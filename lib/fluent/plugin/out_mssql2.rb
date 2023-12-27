@@ -14,6 +14,7 @@ class Mssql2Output < Fluent::BufferedOutput
   config_param :host, :string
   config_param :database, :string
   config_param :table, :string  
+  config_param :port, :string
 
   def configure(conf)
     super
@@ -26,7 +27,7 @@ class Mssql2Output < Fluent::BufferedOutput
 
   def client
     begin
-      db = Sequel.tinytds(username: @username, password: @password, host: @host, database: @database)
+      db = Sequel.tinytds(username: @username, password: @password, host: @host, database: @database, port: @port)
       # db.loggers << Logger.new($stdout)   
     rescue
       raise Fluent::ConfigError, "Cannot open database, check user or password"
